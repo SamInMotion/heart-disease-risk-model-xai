@@ -1,20 +1,36 @@
-# 🫀 Heart Disease Prediction
+# Heart Disease Prediction
 
-This project applies machine learning to predict the presence of heart disease using clinical data. It combines domain-relevant visualizations, uncertainty estimation, and explainability to create a transparent and clinically interpretable model.
+Logistic regression model for predicting heart disease from clinical data, with LIME explanations and bootstrap uncertainty estimates. Built on the UCI Cleveland dataset.
 
----
+The point of this project was less about the prediction (logistic regression on Cleveland is well-trodden ground) and more about making the model's reasoning visible — which features drive individual predictions, and how confident the model actually is.
 
-##  Project Motivation
+## Dataset
 
-Heart disease remains one of the leading causes of death worldwide. Early detection and clinical decision support tools can significantly improve patient outcomes. This project demonstrates:
+[Heart Disease UCI Dataset](https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci) from Kaggle, derived from the Cleveland Clinic dataset.
 
-- The predictive power of clinical indicators
-- How machine learning can support diagnostic decisions
-- How to make black-box models more interpretable and trustworthy
+Citation: Cherngs. (2020). Heart Disease UCI Dataset. Retrieved from [Kaggle](https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci).
 
----
+## Exploratory Analysis
 
-📁 Project Structure
+![Correlation Heatmap](visuals/correlation_heatmap.png)
+
+The heatmap shows which clinical features correlate with heart disease presence. Chest pain type (cp), maximum heart rate (thalach), and exercise-induced angina (exang) show the strongest associations.
+
+## Results
+
+Logistic regression with standard preprocessing (scaling, one-hot encoding). Accuracy: 86%, Precision: 84%, Recall: 89%.
+
+![ROC Curve](visuals/roc_curve.png)
+
+Bootstrap resampling gives confidence intervals on predictions — useful in clinical contexts where a point estimate without uncertainty isn't actionable.
+
+## Explainability
+
+LIME was used for individual prediction explanations. For example, high maximum heart rate (thalach) is typically associated with lower risk, while chest pain type (cp) can push predictions either direction depending on context.
+
+![LIME Explanation](visuals/lime_explanation_instance5.png)
+
+## Files
 
 Notebooks/
 └── heart_disease_analysis.ipynb       # Main analysis and model development
@@ -39,102 +55,18 @@ README.md                              # Project documentation
 
 ---
 
-##  Dataset
+## Tools
 
-The project uses the **[Heart Disease UCI Dataset](https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci)** contributed by Cherngs on Kaggle. It is derived from the Cleveland Clinic dataset, widely used in cardiovascular research.
+Python, pandas, scikit-learn, matplotlib, seaborn, LIME
 
-**Citation:**
-> Cherngs. (2020). *Heart Disease UCI Dataset*. Retrieved from [Kaggle](https://www.kaggle.com/datasets/cherngs/heart-disease-cleveland-uci).
-
----
-
-##  Requirements
-
-- Python 3.7+
-- pandas
-- scikit-learn
-- seaborn
-- matplotlib
-- lime
-
-Install with:
+## Usage
 
 ```bash
+git clone https://github.com/SamInMotion/heart-disease-risk-model-xai.git
+cd heart-disease-risk-model-xai
 pip install -r requirements.txt
- Exploratory Data Analysis
-Key visualizations for understanding feature distributions and relationships:
-
-
-```
-
- Correlation Heatmap
-![Correlation Heatmap](visuals/correlation_heatmap.png)
-
-
- 
-
-
- ##  Model Training
-A logistic regression model is trained using standard preprocessing pipelines (scaling, one-hot encoding).
-
-✅ Evaluation Metrics
-Accuracy: 86%
-
-Precision: 84%
-
-Recall: 89%
-
-##  Model Evaluation
-
-
-
- ROC Curve
-![ROC Curve](visuals/roc_curve.png)
-
- 
- ###  Uncertainty Estimate (Bootstrap)
-
-
-
-We use bootstrap resampling to estimate prediction confidence intervals.
-
-
-This adds robustness and communicates the model's uncertainty — necessary in clinical settings.
-
-
-##  Model Explainability with LIME
-We apply LIME (Local Interpretable Model-Agnostic Explanations) to understand which features contribute most to a specific prediction.
-
-This is essential for clinical trust and interoperability.
-
-![LIME Explanation](visuals/lime_explanation_instance5.png)
-
-
-###  Clinical Insight Example:
-
-High thalach (maximum heart rate) is typically associated with lower risk.
-
-cp (chest pain type) may increase or decrease risk depending on context.
-
-
-✅ How to Use
-
-git clone https://github.com/SamInMotion/heart-disease-prediction.git
-cd heart-disease-prediction
-
-Run the notebook:
-
-Notebooks/heart_disease_analysis.ipynb
-
-Or run the .py script:
-
 python heart_disease_analysis.py
-
-
-##  Author
-Samuel Okoe-Mensah
-LinkedIn | GitHub
-Machine Learning Practitioner with a focus on Explainable AI and Healthcare
+```
 
 ##  License
 This project is licensed under the MIT License.
